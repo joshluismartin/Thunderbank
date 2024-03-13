@@ -3,8 +3,6 @@ import { useState, useRef } from "react";
 // crypto.randomUUID
 
 // Each user needs to have a unique ID
-// Add lines to make sure that the inputted username cannot start with a number
-// Initial balance cannot be negative
 // Check for existing usernames and prevent duplicate entries
 
 export function CreateUser() {
