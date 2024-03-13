@@ -7,7 +7,6 @@ import { useState, useRef } from "react";
 // crypto.randomUUID
 
 // Each user needs to have a unique ID
-// The array of user objects must be stored in local storage to prevent deletion when the page is refreshed
 
 export function CreateUser() {
   // set initial structure and values of userInfo
@@ -27,9 +26,14 @@ export function CreateUser() {
   //   func to store the current userInfo in the array upon clicking submit
   const handleSubmit = (e) => {
     e.preventDefault();
+    // stores current userInfo inside the useRef
     userDatabase.current.push(userInfo);
-    console.log(userInfo);
-    console.log(userDatabase.current);
+
+    // stores current userInfo inside localstorage
+    localStorage.setItem("userInfo", JSON.stringify(userDatabase.current));
+    // console.log(userInfo);
+    const userDB = JSON.parse(localStorage.getItem("userInfo"));
+    console.log(userDB);
   };
 
   return (
