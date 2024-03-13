@@ -6,7 +6,11 @@ import { useState, useRef } from "react";
 
 // crypto.randomUUID
 
+// Each user needs to have a unique ID
+// The array of user objects must be stored in local storage to prevent deletion when the page is refreshed
+
 export function CreateUser() {
+  // set initial structure and values of userInfo
   const [userInfo, setUserInfo] = useState({
     user: "",
     balance: "",
@@ -14,11 +18,13 @@ export function CreateUser() {
   });
   const userDatabase = useRef([]);
 
+  // func to capture user name and balance from the input elements
   const handleChange = (e) => {
     const { name, value } = e.target;
     setUserInfo((prevUserInfo) => ({ ...prevUserInfo, [name]: value }));
   };
 
+  //   func to store the current userInfo in the array upon clicking submit
   const handleSubmit = (e) => {
     e.preventDefault();
     userDatabase.current.push(userInfo);
