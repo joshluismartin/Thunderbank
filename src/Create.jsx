@@ -1,12 +1,11 @@
 import { useState, useRef } from "react";
 
-// export function generateRandomId() {
-//   return Math.floor(Math.random() * 1000000000);
-// }
-
 // crypto.randomUUID
 
 // Each user needs to have a unique ID
+// Add lines to make sure that the inputted username cannot start with a number
+// Initial balance cannot be negative
+// Check for existing usernames and prevent duplicate entries
 
 export function CreateUser() {
   // set initial structure and values of userInfo
@@ -45,6 +44,8 @@ export function CreateUser() {
           name="user"
           value={userInfo.user}
           onChange={handleChange}
+          title="Use upper or lower case letters only"
+          pattern="[A-Za-z\s\-']+"
           required
         />
 
@@ -54,6 +55,8 @@ export function CreateUser() {
           name="balance"
           value={userInfo.balance}
           onChange={handleChange}
+          min="0"
+          required
         />
 
         <input type="submit" value="Submit" />
