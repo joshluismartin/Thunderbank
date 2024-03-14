@@ -5,6 +5,11 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
 import Login from "./routes/Login.jsx"
 import Dashboard from "./routes/Dashboard.jsx"
+import Accounts from "./routes/DashboardChildren/Accounts.jsx"
+import CreateUser from "./routes/DashboardChildren/CreateUser.jsx"
+import Transactions from "./routes/DashboardChildren/Transactions.jsx"
+import SendMoney from "./routes/DashboardChildren/SendMoney.jsx"
+
 
 const router = createBrowserRouter([
   {
@@ -16,16 +21,20 @@ const router = createBrowserRouter([
     element: <Dashboard />,
     children: [
       {
-        path: "/Accounts",
+        path: "Accounts",
         element: <Accounts />,
       },
       {
-        path: "/CreateUser",
+        path: "CreateUser",
         element: <CreateUser />,
       },
       {
-        path: "/Transactions",
+        path: "Transactions",
         element: <Transactions />,
+      },
+      {
+        path: "SendMoney",
+        element: <SendMoney />,
       },
     ]
   },
