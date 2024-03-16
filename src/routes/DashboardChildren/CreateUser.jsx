@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
+import { Input, Button, ButtonGroup } from "@chakra-ui/react";
 
 export default function CreateUser() {
   const {
@@ -13,23 +14,9 @@ export default function CreateUser() {
     reset,
   } = useForm();
 
-  // set initial structure and values of userInfo
-  // const [userInfo, setUserInfo] = useState({
-  //   user: "",
-  //   balance: "",
-  //   userId: "",
-  // });
   const userDatabase = useRef([]);
 
   let uuid = self.crypto.randomUUID();
-
-  console.log(uuid);
-
-  // func to capture user name and balance from the input elements
-  // const handleChange = (e) => {
-  //   const { name, value } = e.target;
-  //   setUserInfo((prevUserInfo) => ({ ...prevUserInfo, [name]: value }));
-  // };
 
   //   func to store the current userInfo in the array upon clicking submit
   const onSubmit = (data) => {
@@ -38,51 +25,48 @@ export default function CreateUser() {
     localStorage.setItem("users", JSON.stringify(userDatabase.current));
 
     reset();
-    // e.preventDefault();
-    // // stores current userInfo inside the useRef
-    // userDatabase.current.push(userInfo);
-
-    // // stores current userInfo inside localstorage
-    // localStorage.setItem("userInfo", JSON.stringify(userDatabase.current));
-    // // console.log(userInfo);
-    // const userDB = JSON.parse(localStorage.getItem("userInfo"));
-    // console.log(userDB);
   };
 
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label>First Name: </label>
-        <input
+        <Input
+          size="md"
           {...register("First Name", { required: true })}
           title="Use upper or lower case letters only"
           pattern="[A-Za-z\s\-']+"
+          placeholder="First Name"
         />
 
         <label>Last Name: </label>
-        <input
+        <Input
           {...register("Last Name")}
           title="Use upper or lower case letters only"
           pattern="[A-Za-z\s\-']+"
           required
+          placeholder="Last Name"
         />
 
         <label htmlFor="">Birthday: </label>
-        <input type="date" {...register("Birth Date")} />
+        <Input type="date" {...register("Birth Date")} />
 
         <label htmlFor="">Input Initial Balance</label>
-        <input
+        <Input
           type="number"
           name="balance"
           {...register("Balance", { required: true })}
           min="0"
           required
+          placeholder="Account Balance"
         />
 
         <label htmlFor="">User ID</label>
-        <input type="text" defaultValue={uuid} {...register("User ID")} />
+        <Input type="text" defaultValue={uuid} {...register("User ID")} />
 
-        <input type="submit" value="Submit" />
+        <Button type="submit" value="Submit" size="md" variant="outline">
+          Submit
+        </Button>
       </form>
     </div>
   );
