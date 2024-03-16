@@ -10,7 +10,7 @@ import Accounts from "./routes/DashboardChildren/Accounts.jsx"
 import CreateUser from "./routes/DashboardChildren/CreateUser.jsx"
 import Transactions from "./routes/DashboardChildren/Transactions.jsx"
 import SendMoney from "./routes/DashboardChildren/SendMoney.jsx"
-import Deposit from "../components/Deposit/Deposit.jsx"
+import Deposit from "./routes/DashboardChildren/Deposit.jsx"
 
 
 const router = createBrowserRouter([

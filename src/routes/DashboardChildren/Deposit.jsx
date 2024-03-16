@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react"
-import './styles.css'
-import '../../src/routes/css/Deposit.css'
+import '../css/Deposit.css'
 import { useDisclosure, Modal, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Button, ModalOverlay } from '@chakra-ui/react'
 import { TableContainer, Table, TableCaption, Thead, Th, Tbody, Tr, Td } from '@chakra-ui/react'
 
@@ -22,7 +21,7 @@ export default function Deposit() {
         amount: amount,
         status: 'deposit',
         balance: balance + Number(amount),
-        timedate: 'March 16,2024'
+        timedate: new Date().toISOString(),
       }])
     } else {
       setError('Invalid deposit amount')
@@ -77,7 +76,7 @@ export default function Deposit() {
       <Modal isCentered isOpen={isOpen} onClose={onClose}>
           <ModalOverlay
           bg='blackAlpha.300'
-          backdropFilter='blur(0.5px) hue-rotate(90deg)'
+          backdropFilter='blur(1px) hue-rotate(90deg)'
         />
         <ModalContent>
           <ModalHeader>Transactions</ModalHeader>
