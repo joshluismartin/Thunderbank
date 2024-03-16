@@ -1,0 +1,42 @@
+.dashboard-container {
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+}
+
+.logo-label {
+  font-size: 3rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar > a {
+  padding: 10px 50px;
+  border-radius: 5px;
+  
+}
+
+.sidebar {
+  position: fixed;
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  border-right: 1px solid gray;
+  gap: 20px;
+  padding: 50px 10px;
+  text-align: left;
+  font-size: 1.5rem;
+}
+
+.main {
+  padding: 0 0 0 400px;
+}
+
+.main-components {
+  padding: 20px;
+}
