@@ -8,6 +8,8 @@ import {
   AlertDescription,
 } from '@chakra-ui/react'
 
+import './css/Login.css'
+
 const Login = () => {
 
   const [username, setUsername] = useState('');
@@ -32,24 +34,26 @@ const Login = () => {
 
   return (
     <div>
-      <div className="login-container">
-        <Heading mb={4} color='#D69E2E'>ThunderBank Login</Heading>
-        {error && <p className="error">{error}</p>}
-        <Input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <Input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Button colorScheme='teal' variant='ghost' onClick={handleLogin}>
-          Login
-        </Button>
+      <div className='login-page'>
+        <div className="login-container">
+          <Heading mb={4} color='#D69E2E'>ThunderBank Login</Heading>
+          {error && <p className="error">{error}</p>}
+          <Input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <Input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button colorScheme='teal' variant='ghost' onClick={handleLogin}>
+            Login
+          </Button>
+        </div>
       </div>
     </div>
   );
