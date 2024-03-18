@@ -10,6 +10,7 @@ import Accounts from "./routes/DashboardChildren/Accounts.jsx"
 import CreateUser from "./routes/DashboardChildren/CreateUser.jsx"
 import Transactions from "./routes/DashboardChildren/Transactions.jsx"
 import SendMoney from "./routes/DashboardChildren/SendMoney.jsx"
+import Deposit from "./routes/DashboardChildren/Deposit.jsx"
 
 
 const router = createBrowserRouter([
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: "SendMoney",
         element: <SendMoney />,
+      },
+      {
+        path: "Deposit",
+        element: <Deposit />,
       },
     ]
   },
