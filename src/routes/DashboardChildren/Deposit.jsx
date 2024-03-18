@@ -17,7 +17,7 @@ export default function Deposit() {
     if (Number(amount) > 0) {
       setBalance(prev => Number(prev) + Number(amount))
       setNotice(`Successfully deposited ${formattedAmount(amount)}`)
-      setTransactions([...transactions,{
+      setTransactions([...transactions, {
         amount: amount,
         status: 'deposit',
         balance: balance + Number(amount),
@@ -33,10 +33,10 @@ export default function Deposit() {
     setError('')
     setNotice('')
 
-    if (Number(amount) > 0 && Number(amount) <= balance){
+    if (Number(amount) > 0 && Number(amount) <= balance) {
       setBalance(prev => Number(prev) - Number(amount));
       setNotice(`Successfully withdrawn ${formattedAmount(amount)}`)
-      setTransactions([...transactions,{
+      setTransactions([...transactions, {
         amount: amount,
         status: 'withdraw',
         balance: balance - Number(amount),
@@ -65,7 +65,7 @@ export default function Deposit() {
   const onClickModal = () => {
     onOpen()
   }
-  
+
   return (
     <>
       <Button
@@ -74,7 +74,7 @@ export default function Deposit() {
         Transactions
       </Button>
       <Modal isCentered isOpen={isOpen} onClose={onClose}>
-          <ModalOverlay
+        <ModalOverlay
           bg='blackAlpha.300'
           backdropFilter='blur(1px) hue-rotate(90deg)'
         />
@@ -104,11 +104,11 @@ export default function Deposit() {
                 <Tbody>
                   {transactions.map((transaction, index) => (
                     <Tr>
-                    <Td>{transaction.timedate}</Td>
-                    <Td>{transaction.status}</Td>
-                    <Td>{transaction.amount}</Td>
-                    <Td>{transaction.balance}</Td>
-                  </Tr>
+                      <Td>{transaction.timedate}</Td>
+                      <Td>{transaction.status}</Td>
+                      <Td>{transaction.amount}</Td>
+                      <Td>{transaction.balance}</Td>
+                    </Tr>
                   ))}
 
                 </Tbody>
@@ -119,10 +119,10 @@ export default function Deposit() {
             <Button onClick={onClose}>Close</Button>
           </ModalFooter>
         </ModalContent>
-        
+
       </Modal>
-      
+
     </>
-    
+
   );
 }
