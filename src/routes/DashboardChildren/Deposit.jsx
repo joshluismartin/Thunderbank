@@ -3,13 +3,20 @@ import '../css/Deposit.css'
 import { useDisclosure, Modal, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Button, ModalOverlay } from '@chakra-ui/react'
 import { TableContainer, Table, TableCaption, Thead, Th, Tbody, Tr, Td } from '@chakra-ui/react'
 
-export default function Deposit() {
-  const [balance, setBalance] = useState(0);
+export default function Deposit({user, resetUsers}) {
+  const [balance, setBalance] = useState(user['balance']);
   const [amount, setAmount] = useState(0)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [error, setError] = useState('')
   const [notice, setNotice] = useState('')
-  const [transactions, setTransactions] = useState([])
+  const [transactions, setTransactions] = useState([
+    {
+      amount: user['balance'],
+      status: 'deposit',
+      balance: user['balance'],
+      timedate: new Date().toLocaleString('en-US'),
+    }
+  ])
 
   const deposit = () => {
     setError('')
@@ -17,13 +24,17 @@ export default function Deposit() {
     if (Number(amount) > 0) {
       setBalance(prev => Number(prev) + Number(amount))
       setNotice(`Successfully deposited ${formattedAmount(amount)}`)
-      setTransactions([...transactions, {
+      const newBalance = Number(balance) + Number(amount)
+      const newTransaction = {
+        accountName:`${user['firstName']} ${user['lastName']}`, 
         amount: amount,
         status: 'deposit',
-        balance: balance + Number(amount),
-        timedate: new Date().toISOString(),
-      }])
-    } else {
+        balance: newBalance,
+        timedate: new Date().toLocaleString('en-US'),
+      }
+      setTransactions([...transactions, newTransaction])
+      setStorageBalance(newBalance)
+    } else {  
       setError('Invalid deposit amount')
       console.log('Invalid deposit amount')
     }
@@ -36,17 +47,42 @@ export default function Deposit() {
     if (Number(amount) > 0 && Number(amount) <= balance) {
       setBalance(prev => Number(prev) - Number(amount));
       setNotice(`Successfully withdrawn ${formattedAmount(amount)}`)
-      setTransactions([...transactions, {
+      const newBalance = Number(balance) - Number(amount)
+      const newTransaction = {
+        accountName:`${user['firstName']} ${user['lastName']}`, 
         amount: amount,
         status: 'withdraw',
-        balance: balance - Number(amount),
-        timedate: 'March 16,2024'
-      }])
+        balance: newBalance,
+        timedate: new Date().toLocaleString('en-US')
+      }
+      setTransactions([...transactions, newTransaction])
+      setStorageBalance(newBalance)
     } else {
       setError('Invalid withdrawal amount')
       console.log('Invalid withdrawal amount');
     }
   }
+
+  const setStorageBalance = (newBalance) => {
+    const otherUsers = usersStorage().filter(x => {
+      return x['userID'] !== user['userID'];
+    })
+    console.log('otherusers', otherUsers)
+    const newUser = { ...user, 'balance': newBalance }
+    const newUsers = [ ...otherUsers, newUser ]
+    localStorage.setItem('users', JSON.stringify(newUsers))
+    resetUsers()
+  }
+  
+  const usersStorage = () => {
+    return JSON.parse(localStorage.getItem('users'))
+  }
+
+  // const findUserIndex = (id) => {
+  //   const users = usersStorage()
+  //   const index = users.findIndex(p => p['User ID'] == user['User ID'])
+  //   return index
+  // }
 
   const formattedAmount = (amount) => {
     return new Intl.NumberFormat('en-PH', {
@@ -83,7 +119,7 @@ export default function Deposit() {
           <ModalCloseButton />
           <ModalBody>
             <div className="balance-container">
-              <p className="balanceAmount">Josh Luis Martin</p>
+              <p className="currentUser">{`${user['firstName']} ${user['lastName']}`}</p>
               <div>{formattedBalance}</div>
               <div className="error">{error}</div>
               <div className="notice">{notice}</div>
@@ -95,7 +131,8 @@ export default function Deposit() {
               <Table size='sm' variant='striped' colorScheme='teal'>
                 <Thead>
                   <Tr>
-                    <Th>Time & Date</Th>
+                    <Th>Account Name</Th>
+                    <Th>Date & Time</Th>
                     <Th>Status</Th>
                     <Th>Amount</Th>
                     <Th isNumeric>Balance</Th>
@@ -103,7 +140,8 @@ export default function Deposit() {
                 </Thead>
                 <Tbody>
                   {transactions.map((transaction, index) => (
-                    <Tr>
+                    <Tr key={index}>
+                      <Td>{transaction.accountName}</Td>
                       <Td>{transaction.timedate}</Td>
                       <Td>{transaction.status}</Td>
                       <Td>{transaction.amount}</Td>
