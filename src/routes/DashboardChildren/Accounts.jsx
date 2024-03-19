@@ -15,9 +15,6 @@ import {
 
 export default function Accounts() {
   let parsedUserInfo = JSON.parse(localStorage.getItem("users"));
-  console.log(parsedUserInfo);
-  console.log(parsedUserInfo[0]);
-  console.log(parsedUserInfo[0].firstName);
 
   return (
     <TableContainer>
