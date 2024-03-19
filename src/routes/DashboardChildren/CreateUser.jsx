@@ -15,7 +15,7 @@ export default function CreateUser() {
     control,
   } = useForm();
 
-  const userDatabase = useRef([]);
+  // const userDatabase = useRef([]);
 
   const dateToday = new Date().toISOString().split("T")[0];
 
@@ -24,9 +24,15 @@ export default function CreateUser() {
 
   //   func to store the current userInfo in the array upon clicking submit
   const onSubmit = (data) => {
-    console.log(data);
-    userDatabase.current.push(data);
-    localStorage.setItem("users", JSON.stringify(userDatabase.current));
+    // console.log(data);
+    const existingUsers = JSON.parse(localStorage.getItem("users")) || [];
+
+    // userDatabase.current.push(data);
+
+    const updatedUsers = [...existingUsers, data];
+
+    console.log(updatedUsers);
+    localStorage.setItem("users", JSON.stringify(updatedUsers));
 
     reset();
   };
