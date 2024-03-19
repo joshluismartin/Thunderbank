@@ -37,7 +37,7 @@ export default function CreateUser() {
         <label>First Name: </label>
         <Input
           size="md"
-          {...register("First Name", { required: true })}
+          {...register("firstName", { required: true })}
           title="Use upper or lower case letters only"
           pattern="[A-Za-z\s\-']+"
           placeholder="First Name"
@@ -45,7 +45,7 @@ export default function CreateUser() {
 
         <label>Last Name: </label>
         <Input
-          {...register("Last Name")}
+          {...register("lastName")}
           title="Use upper or lower case letters only"
           pattern="[A-Za-z\s\-']+"
           required
@@ -55,7 +55,7 @@ export default function CreateUser() {
         <label htmlFor="">Email Address: </label>
         <Input
           type="email"
-          {...register("Email Address")}
+          {...register("emailAddress")}
           title="Use a valid email address with @"
           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
           placeholder="Email Address"
@@ -65,7 +65,7 @@ export default function CreateUser() {
         <label htmlFor="">Birthday: </label>
         <Input
           type="date"
-          {...register("Birth Date")}
+          {...register("birthDate")}
           max={dateToday}
           required
         />
@@ -74,7 +74,7 @@ export default function CreateUser() {
         <Input
           type="number"
           name="balance"
-          {...register("Balance", { required: true })}
+          {...register("balance", { required: true })}
           min="0"
           required
           placeholder="Account Balance"
@@ -84,7 +84,7 @@ export default function CreateUser() {
         <Input
           type="text"
           defaultValue={truncatedUUID}
-          {...register("User ID")}
+          {...register("userId")}
         />
 
         <Button type="submit" value="Submit" size="md" variant="outline">
