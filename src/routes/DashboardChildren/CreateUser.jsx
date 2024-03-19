@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { useState, useRef } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { Input, Button, ButtonGroup } from "@chakra-ui/react";
 
 export default function CreateUser() {
@@ -12,11 +12,15 @@ export default function CreateUser() {
     watch,
     formState: { errors },
     reset,
+    control,
   } = useForm();
 
   const userDatabase = useRef([]);
 
+  const dateToday = new Date().toISOString().split("T")[0];
+
   let uuid = self.crypto.randomUUID();
+  let truncatedUUID = uuid.slice(0, 13);
 
   //   func to store the current userInfo in the array upon clicking submit
   const onSubmit = (data) => {
@@ -48,8 +52,23 @@ export default function CreateUser() {
           placeholder="Last Name"
         />
 
+        <label htmlFor="">Email Address: </label>
+        <Input
+          type="email"
+          {...register("Email Address")}
+          title="Use a valid email address with @"
+          pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+          placeholder="Email Address"
+          required
+        />
+
         <label htmlFor="">Birthday: </label>
-        <Input type="date" {...register("Birth Date")} />
+        <Input
+          type="date"
+          {...register("Birth Date")}
+          max={dateToday}
+          required
+        />
 
         <label htmlFor="">Input Initial Balance</label>
         <Input
@@ -62,7 +81,11 @@ export default function CreateUser() {
         />
 
         <label htmlFor="">User ID</label>
-        <Input type="text" defaultValue={uuid} {...register("User ID")} />
+        <Input
+          type="text"
+          defaultValue={truncatedUUID}
+          {...register("User ID")}
+        />
 
         <Button type="submit" value="Submit" size="md" variant="outline">
           Submit
