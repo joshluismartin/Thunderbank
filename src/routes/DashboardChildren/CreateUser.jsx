@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { useState, useRef } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Input, Button, ButtonGroup } from "@chakra-ui/react";
+import { Input, Button, ButtonGroup, useToast } from "@chakra-ui/react";
 
 export default function CreateUser() {
   const {
@@ -21,6 +21,8 @@ export default function CreateUser() {
 
   let uuid = self.crypto.randomUUID();
   let truncatedUUID = uuid.slice(0, 13);
+
+  const toast = useToast();
 
   //   func to store the current userInfo in the array upon clicking submit
   const onSubmit = (data) => {
@@ -93,7 +95,21 @@ export default function CreateUser() {
           {...register("userId")}
         />
 
-        <Button type="submit" value="Submit" size="md" variant="outline">
+        <Button
+          type="submit"
+          value="Submit"
+          size="md"
+          variant="outline"
+          onClick={() =>
+            toast({
+              title: "New User Added",
+              description: "New account was successfully created",
+              status: "success",
+              duration: 3000,
+              isClosable: true,
+            })
+          }
+        >
           Submit
         </Button>
       </form>
