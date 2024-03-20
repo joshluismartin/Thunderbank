@@ -12,7 +12,7 @@ export default function Deposit({user, resetUsers}) {
   const [transactions, setTransactions] = useState([
     {
       amount: user['balance'],
-      status: 'deposit',
+      status: 'Deposit',
       balance: user['balance'],
       timedate: new Date().toLocaleString('en-US'),
     }
@@ -51,7 +51,7 @@ export default function Deposit({user, resetUsers}) {
       const newTransaction = {
         accountName:`${user['firstName']} ${user['lastName']}`, 
         amount: amount,
-        status: 'withdraw',
+        status: 'Withdraw',
         balance: newBalance,
         timedate: new Date().toLocaleString('en-US')
       }
@@ -65,7 +65,7 @@ export default function Deposit({user, resetUsers}) {
 
   const setStorageBalance = (newBalance) => {
     const otherUsers = usersStorage().filter(x => {
-      return x['userID'] !== user['userID'];
+      return x['userId'] !== user['userId'];
     })
     console.log('otherusers', otherUsers)
     const newUser = { ...user, 'balance': newBalance }
@@ -109,7 +109,7 @@ export default function Deposit({user, resetUsers}) {
       >
         Transactions
       </Button>
-      <Modal isCentered isOpen={isOpen} onClose={onClose}>
+      <Modal isCentered isOpen={isOpen} onClose={onClose}  size="xl">
         <ModalOverlay
           bg='blackAlpha.300'
           backdropFilter='blur(1px) hue-rotate(90deg)'
@@ -131,7 +131,6 @@ export default function Deposit({user, resetUsers}) {
               <Table size='sm' variant='striped' colorScheme='teal'>
                 <Thead>
                   <Tr>
-                    <Th>Account Name</Th>
                     <Th>Date & Time</Th>
                     <Th>Status</Th>
                     <Th>Amount</Th>
@@ -141,11 +140,10 @@ export default function Deposit({user, resetUsers}) {
                 <Tbody>
                   {transactions.map((transaction, index) => (
                     <Tr key={index}>
-                      <Td>{transaction.accountName}</Td>
                       <Td>{transaction.timedate}</Td>
                       <Td>{transaction.status}</Td>
-                      <Td>{transaction.amount}</Td>
-                      <Td>{transaction.balance}</Td>
+                      <Td>{new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(transaction.amount)}</Td>
+                      <Td>{new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(transaction.balance)}</Td>
                     </Tr>
                   ))}
 
