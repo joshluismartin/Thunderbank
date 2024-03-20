@@ -1,17 +1,17 @@
 import React from "react";
-import { ChakraProvider } from '@chakra-ui/react'
+import { ChakraProvider } from "@chakra-ui/react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "./index.css";
-import Login from "./routes/Login.jsx"
-import Dashboard from "./routes/Dashboard.jsx"
-import Accounts from "./routes/DashboardChildren/Accounts.jsx"
-import CreateUser from "./routes/DashboardChildren/CreateUser.jsx"
-import Transactions from "./routes/DashboardChildren/Transactions.jsx"
-import SendMoney from "./routes/DashboardChildren/SendMoney.jsx"
-import Deposit from "./routes/DashboardChildren/Deposit.jsx"
-
+import Login from "./routes/Login.jsx";
+import Dashboard from "./routes/Dashboard.jsx";
+import Accounts from "./routes/DashboardChildren/Accounts.jsx";
+import CreateUser from "./routes/DashboardChildren/CreateUser.jsx";
+import Transactions from "./routes/DashboardChildren/Transactions.jsx";
+import SendMoney from "./routes/DashboardChildren/SendMoney.jsx";
+import Deposit from "./routes/DashboardChildren/Deposit.jsx";
+import Forex from "./routes/DashboardChildren/Forex.jsx";
 
 const router = createBrowserRouter([
   {
@@ -42,7 +42,11 @@ const router = createBrowserRouter([
         path: "Deposit",
         element: <Deposit />,
       },
-    ]
+      {
+        path: "Forex",
+        element: <Forex />,
+      },
+    ],
   },
 ]);
 
@@ -53,4 +57,3 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </ChakraProvider>
   </React.StrictMode>
 );
-
