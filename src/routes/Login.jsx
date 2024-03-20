@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { Input, Heading, } from '@chakra-ui/react'
 import { Button } from '@chakra-ui/react'
@@ -10,27 +11,31 @@ import {
 
 import './css/Login.css'
 
+
+
+
 const Login = () => {
+  const navigate = useNavigate();
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   const handleLogin = () => {
-    if (username !== 'useradmin' || password !== 'stanleyispogi') {
+    if (username === 'useradmin' && password === 'stanleyispogi') {
+      localStorage.setItem('loggedIn', 'true');
+      console.log('Login successful');
+      navigate('/Dashboard');
+    } else {
       setError(
         <Alert status='error'>
           <AlertIcon />
           <AlertTitle>Invalid Credentials!</AlertTitle>
           <AlertDescription>Please Check Your Username or Password</AlertDescription>
-        </Alert>
-      );
-    } else {
-      localStorage.setItem('loggedIn', 'true');
-      console.log('Login successful');
-    }
-  };
+        </Alert>);
 
+    };
+  }
 
   return (
     <div>

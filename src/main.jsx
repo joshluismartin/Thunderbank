@@ -11,6 +11,7 @@ import CreateUser from "./routes/DashboardChildren/CreateUser.jsx"
 import Transactions from "./routes/DashboardChildren/Transactions.jsx"
 import SendMoney from "./routes/DashboardChildren/SendMoney.jsx"
 import Deposit from "./routes/DashboardChildren/Deposit.jsx"
+import { ProtectedRoute } from "./components/ProtectedRoute.jsx"
 
 
 const router = createBrowserRouter([
@@ -20,7 +21,11 @@ const router = createBrowserRouter([
   },
   {
     path: "/Dashboard",
-    element: <Dashboard />,
+    element: (
+      <ProtectedRoute>
+        <Dashboard />
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: "Accounts",

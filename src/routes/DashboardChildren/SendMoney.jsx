@@ -1,58 +1,99 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { Outlet } from "react-router-dom";
+import React, { useState } from 'react';
 import {
   Box,
   Button,
   Input,
-  InputGroup,
-  InputLeftElement,
-  Text,
-  VStack,
   FormControl,
   FormLabel,
+  VStack,
+  useToast,
 } from '@chakra-ui/react';
-import { SearchIcon } from '@chakra-ui/icons';
 
-function SendMoney() {
+const SendMoney = () => {
+  const toast = useToast();
+  const [sendFrom, setSendFrom] = useState('');
+  const [sendTo, setSendTo] = useState('');
+  const [amount, setAmount] = useState('');
+
+  const handleSubmit = () => {
+    // Validate input
+    if (!sendFrom || !sendTo || !amount) {
+      toast({
+        title: 'All fields are required.',
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      });
+      return;
+    }
+
+    // Retrieve balances from localStorage
+    const senderBalance = localStorage.getItem(sendFrom);
+    const receiverBalance = localStorage.getItem(sendTo);
+
+    if (!senderBalance || parseFloat(senderBalance) < parseFloat(amount)) {
+      toast({
+        title: 'Insufficient balance.',
+        status: 'error',
+        duration: 2000,
+        isClosable: true,
+      });
+      return;
+    }
+
+    // Update balances in localStorage
+    localStorage.setItem(sendFrom, (parseFloat(senderBalance) - parseFloat(amount)).toString());
+    localStorage.setItem(sendTo, (parseFloat(receiverBalance || 0) + parseFloat(amount)).toString());
+
+    // Success message
+    toast({
+      title: 'Money sent successfully!',
+      status: 'success',
+      duration: 2000,
+      isClosable: true,
+    });
+
+    // Reset fields
+    setSendFrom('');
+    setSendTo('');
+    setAmount('');
+  };
+
   return (
-    <VStack spacing={4} align="stretch">
-
-      <Box p={5} shadow="md" borderWidth="1px">
-        <FormControl id="send-from" isRequired>
+    <Box p={4}>
+      <VStack spacing={4}>
+        <FormControl id="sendFrom">
           <FormLabel>Send From</FormLabel>
-          <InputGroup>
-            <InputLeftElement pointerEvents="none" children={<SearchIcon color="gray.300" />} />
-            <Input placeholder="search..." />
-          </InputGroup>
-          <Text mt={2}>user. balance</Text>
+          <Input
+            placeholder="search..."
+            value={sendFrom}
+            onChange={(e) => setSendFrom(e.target.value)}
+          />
         </FormControl>
-      </Box>
-
-
-      <Box p={5} shadow="md" borderWidth="1px">
-        <FormControl id="send-to" isRequired>
+        <FormControl id="sendTo">
           <FormLabel>Send To</FormLabel>
-          <InputGroup>
-            <InputLeftElement pointerEvents="none" children={<SearchIcon color="gray.300" />} />
-            <Input placeholder="search..." />
-          </InputGroup>
-          <Text mt={2}>user. balance</Text>
+          <Input
+            placeholder="search..."
+            value={sendTo}
+            onChange={(e) => setSendTo(e.target.value)}
+          />
         </FormControl>
-      </Box>
-
-      {/* Amount and Send Button */}
-      <Box display="flex" justifyContent="space-between" alignItems="center" p={5} shadow="md" borderWidth="1px">
-        <FormControl id="amount" isRequired w="70%">
-          <Input placeholder="amount" />
+        <FormControl id="amount">
+          <FormLabel>Amount</FormLabel>
+          <Input
+            placeholder="0.00"
+            type="number"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+          />
         </FormControl>
-        <Button colorScheme="blue" px={12}>
+        <Button colorScheme="blue" onClick={handleSubmit}>
           Send
         </Button>
-      </Box>
-    </VStack>
+      </VStack>
+    </Box>
   );
-}
+};
 
 export default SendMoney;
 
