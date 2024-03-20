@@ -36,7 +36,7 @@ export default function Transactions() {
             </Tr>
           </Thead>
           <Tbody>
-            {users.map((user, index) => (
+            {users?.map((user, index) => (
               <Tr key={index}>
                 <Td>{user['firstName']} {user['lastName']}</Td>
                 <Td>{user['userId']}</Td>

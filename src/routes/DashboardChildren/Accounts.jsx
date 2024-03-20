@@ -28,7 +28,7 @@ export default function Accounts() {
           </Tr>
         </Thead>
         <Tbody>
-          {parsedUserInfo.map((user, index) => (
+          {parsedUserInfo?.map((user, index) => (
             <Tr key={index}>
               <Td>{user.userId}</Td>
               <Td>
