@@ -1,3 +1,14 @@
-.create-user {
-	gap: 2rem;
+
+.form-container {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.submit-container {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
 }

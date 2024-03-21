@@ -17,7 +17,7 @@ export default function Accounts() {
   let parsedUserInfo = JSON.parse(localStorage.getItem("users"));
 
   return (
-    <TableContainer>
+    <TableContainer style={{ width: "100%"}}>
       <Table variant="striped" colorScheme="orange">
         <TableCaption>Existing Thunderbank User Accounts</TableCaption>
         <Thead>
