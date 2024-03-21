@@ -57,7 +57,7 @@ export default function Dashboard() {
       <Button color='#ECC94B' colorScheme="red" onClick={onOpen}>
         Thunder
       </Button>
-      <Drawer placement={placement} onClose={onClose} isOpen={isOpen} size='md' colorScheme="red">
+      <Drawer placement={placement} onClose={onClose} isOpen={isOpen} size='sm' colorScheme="red">
         <DrawerContent>
           <DrawerBody>
             <div className="dashboard-container">

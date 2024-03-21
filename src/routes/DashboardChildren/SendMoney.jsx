@@ -1,99 +1,93 @@
-import React, { useState } from 'react';
-import {
-  Box,
-  Button,
-  Input,
-  FormControl,
-  FormLabel,
-  VStack,
-  useToast,
-} from '@chakra-ui/react';
+import React from "react";
+import { useForm } from "react-hook-form";
+import { Input, Button, useToast } from "@chakra-ui/react";
 
-const SendMoney = () => {
+export default function SendMoney() {
+  const { register, handleSubmit, formState: { errors }, reset } = useForm();
   const toast = useToast();
-  const [sendFrom, setSendFrom] = useState('');
-  const [sendTo, setSendTo] = useState('');
-  const [amount, setAmount] = useState('');
 
-  const handleSubmit = () => {
-    // Validate input
-    if (!sendFrom || !sendTo || !amount) {
+
+  const onSubmit = (data) => {
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+
+    let sender = users.find(user =>
+      user.firstName === data.sendFromFirstName && user.lastName === data.sendFromLastName
+    );
+    let recipient = users.find(user =>
+      user.firstName === data.sendToFirstName && user.lastName === data.sendToLastName
+    );
+
+    // Convert amount to a number using parseFloat
+    let amountToSend = parseFloat(data.amount);
+
+    if (sender && recipient && parseFloat(sender.balance) >= amountToSend) {
+      // Update balances as numbers
+      sender.balance = parseFloat(sender.balance) - amountToSend;
+      recipient.balance = parseFloat(recipient.balance) + amountToSend;
+
+      localStorage.setItem("users", JSON.stringify(users));
+
       toast({
-        title: 'All fields are required.',
-        status: 'error',
-        duration: 2000,
+        title: "Transaction successful",
+        description: `Money sent from ${sender.firstName} to ${recipient.firstName}`,
+        status: "success",
+        duration: 3000,
         isClosable: true,
       });
-      return;
-    }
 
-    // Retrieve balances from localStorage
-    const senderBalance = localStorage.getItem(sendFrom);
-    const receiverBalance = localStorage.getItem(sendTo);
-
-    if (!senderBalance || parseFloat(senderBalance) < parseFloat(amount)) {
+      reset();
+    } else {
       toast({
-        title: 'Insufficient balance.',
-        status: 'error',
-        duration: 2000,
+        title: "Transaction failed",
+        description: "Please check the user names and balances",
+        status: "error",
+        duration: 3000,
         isClosable: true,
       });
-      return;
     }
-
-    // Update balances in localStorage
-    localStorage.setItem(sendFrom, (parseFloat(senderBalance) - parseFloat(amount)).toString());
-    localStorage.setItem(sendTo, (parseFloat(receiverBalance || 0) + parseFloat(amount)).toString());
-
-    // Success message
-    toast({
-      title: 'Money sent successfully!',
-      status: 'success',
-      duration: 2000,
-      isClosable: true,
-    });
-
-    // Reset fields
-    setSendFrom('');
-    setSendTo('');
-    setAmount('');
   };
 
   return (
-    <Box p={4}>
-      <VStack spacing={4}>
-        <FormControl id="sendFrom">
-          <FormLabel>Send From</FormLabel>
-          <Input
-            placeholder="search..."
-            value={sendFrom}
-            onChange={(e) => setSendFrom(e.target.value)}
-          />
-        </FormControl>
-        <FormControl id="sendTo">
-          <FormLabel>Send To</FormLabel>
-          <Input
-            placeholder="search..."
-            value={sendTo}
-            onChange={(e) => setSendTo(e.target.value)}
-          />
-        </FormControl>
-        <FormControl id="amount">
-          <FormLabel>Amount</FormLabel>
-          <Input
-            placeholder="0.00"
-            type="number"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-          />
-        </FormControl>
-        <Button colorScheme="blue" onClick={handleSubmit}>
-          Send
+    <div>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <label>Send From (First Name): </label>
+        <Input
+          {...register("sendFromFirstName", { required: true })}
+          placeholder="Sender's First Name"
+        />
+
+        <label>Send From (Last Name): </label>
+        <Input
+          {...register("sendFromLastName", { required: true })}
+          placeholder="Sender's Last Name"
+        />
+
+        <label>Send To (First Name): </label>
+        <Input
+          {...register("sendToFirstName", { required: true })}
+          placeholder="Recipient's First Name"
+        />
+
+        <label>Send To (Last Name): </label>
+        <Input
+          {...register("sendToLastName", { required: true })}
+          placeholder="Recipient's Last Name"
+        />
+        <label>Amount: </label>
+        <Input
+          type="number"
+          {...register("amount", { required: true, min: 1 })}
+          placeholder="Amount to Send"
+        />
+
+        <Button
+          type="submit"
+          size="md"
+          variant="outline"
+        >
+          Send Money
         </Button>
-      </VStack>
-    </Box>
+      </form>
+    </div>
   );
-};
-
-export default SendMoney;
-
+}

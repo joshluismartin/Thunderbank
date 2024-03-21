@@ -3,7 +3,7 @@ import '../css/Deposit.css'
 import { useDisclosure, Modal, ModalContent, ModalHeader, ModalCloseButton, ModalBody, ModalFooter, Button, ModalOverlay } from '@chakra-ui/react'
 import { TableContainer, Table, TableCaption, Thead, Th, Tbody, Tr, Td } from '@chakra-ui/react'
 
-export default function Deposit({user, resetUsers}) {
+export default function Deposit({ user, resetUsers }) {
   const [balance, setBalance] = useState(user['balance']);
   const [amount, setAmount] = useState(0)
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -26,7 +26,7 @@ export default function Deposit({user, resetUsers}) {
       setNotice(`Successfully deposited ${formattedAmount(amount)}`)
       const newBalance = Number(balance) + Number(amount)
       const newTransaction = {
-        accountName:`${user['firstName']} ${user['lastName']}`, 
+        accountName: `${user['firstName']} ${user['lastName']}`,
         amount: amount,
         status: 'deposit',
         balance: newBalance,
@@ -34,7 +34,7 @@ export default function Deposit({user, resetUsers}) {
       }
       setTransactions([...transactions, newTransaction])
       setStorageBalance(newBalance)
-    } else {  
+    } else {
       setError('Invalid deposit amount')
       console.log('Invalid deposit amount')
     }
@@ -49,7 +49,7 @@ export default function Deposit({user, resetUsers}) {
       setNotice(`Successfully withdrawn ${formattedAmount(amount)}`)
       const newBalance = Number(balance) - Number(amount)
       const newTransaction = {
-        accountName:`${user['firstName']} ${user['lastName']}`, 
+        accountName: `${user['firstName']} ${user['lastName']}`,
         amount: amount,
         status: 'Withdraw',
         balance: newBalance,
@@ -69,11 +69,11 @@ export default function Deposit({user, resetUsers}) {
     })
     console.log('otherusers', otherUsers)
     const newUser = { ...user, 'balance': newBalance }
-    const newUsers = [ ...otherUsers, newUser ]
+    const newUsers = [...otherUsers, newUser]
     localStorage.setItem('users', JSON.stringify(newUsers))
     resetUsers()
   }
-  
+
   const usersStorage = () => {
     return JSON.parse(localStorage.getItem('users'))
   }
@@ -109,7 +109,7 @@ export default function Deposit({user, resetUsers}) {
       >
         Transactions
       </Button>
-      <Modal isCentered isOpen={isOpen} onClose={onClose}  size="xl">
+      <Modal isCentered isOpen={isOpen} onClose={onClose} size="xl">
         <ModalOverlay
           bg='blackAlpha.300'
           backdropFilter='blur(1px) hue-rotate(90deg)'
