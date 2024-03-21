@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import {
@@ -12,9 +13,14 @@ import {
   TableCaption,
   TableContainer,
 } from "@chakra-ui/react";
+import UserBudget from "./UserBudget";
 
 export default function Accounts() {
-  let parsedUserInfo = JSON.parse(localStorage.getItem("users"));
+  const [users, setUsers] = useState(JSON.parse(localStorage.getItem("users")));
+
+  const resetUsers = () => {
+    setUsers(JSON.parse(localStorage.getItem("users")));
+  };
 
   return (
     <TableContainer>
@@ -28,7 +34,7 @@ export default function Accounts() {
           </Tr>
         </Thead>
         <Tbody>
-          {parsedUserInfo?.map((user, index) => (
+          {users?.map((user, index) => (
             <Tr key={index}>
               <Td>{user.userId}</Td>
               <Td>
@@ -37,6 +43,9 @@ export default function Accounts() {
                 {user.lastName}
               </Td>
               <Td>PHP {user.balance}</Td>
+              <Td>
+                <UserBudget user={user} resetUsers={resetUsers} />
+              </Td>
             </Tr>
           ))}
         </Tbody>
