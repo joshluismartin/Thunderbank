@@ -4,15 +4,20 @@
   width: 100vw;
 }
 
+
+
 .logo-label {
-  font-size: 3rem;
+  font-size: 2rem;
 }
 
 .logo {
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
 }
+
+
 
 .sidebar>a {
   padding: 10px 50px;
@@ -22,7 +27,7 @@
 
 .sidebar {
   position: fixed;
-  width: 400px;
+  width: 300px;
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -39,3 +44,5 @@
 .main-components {
   padding: 20px;
 }
+
+/*/

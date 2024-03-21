@@ -57,14 +57,14 @@ export default function Dashboard() {
       <Button color='#ECC94B' colorScheme="red" onClick={onOpen}>
         Thunder
       </Button>
-      <Drawer placement={placement} onClose={onClose} isOpen={isOpen} size='sm' colorScheme="red">
+      <Drawer placement={placement} onClose={onClose} isOpen={isOpen} size='xs' colorScheme="red">
         <DrawerContent>
           <DrawerBody>
             <div className="dashboard-container">
               <div className="sidebar">
                 <div className="logo">
-                  <img src={logo} alt="Logo" style={{ width: '5rem', height: "5rem" }} />
-                  <span className="logo-label" style={{ fontWeight: 'bold', fontSize: '2.5rem' }}>ThunderBank</span>
+                  <img src={logo} alt="Logo" style={{ width: '4rem', height: "4rem" }} />
+                  <span className="logo-label" style={{ fontWeight: 'bold', fontSize: '2rem' }}>ThunderBank</span>
                 </div>
                 <Link to='Accounts'> Accounts  </Link>
                 <Link to='CreateUser'> Create User </Link>

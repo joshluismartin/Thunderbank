@@ -40,7 +40,7 @@ export default function CreateUser() {
   };
 
   return (
-    <div>
+    <div className="create-user">
       <form onSubmit={handleSubmit(onSubmit)}>
         <label>First Name: </label>
         <Input

@@ -36,7 +36,7 @@ export default function Accounts() {
                 {"\u00A0"}
                 {user.lastName}
               </Td>
-              <Td>PHP {user.balance}</Td>
+              <Td isNumeric>{new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(user.balance)}</Td>
             </Tr>
           ))}
         </Tbody>
