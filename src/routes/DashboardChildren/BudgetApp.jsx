@@ -7,6 +7,7 @@ import {
   Input,
   Button,
   Select,
+  extendTheme,
 } from '@chakra-ui/react';
 import { User } from './User.js'; // Assume User class is exported from User.js
 

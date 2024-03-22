@@ -1,7 +1,6 @@
 import { Button } from "@chakra-ui/react";
 import React from "react";
-import { Link } from "react-router-dom";
-import { Outlet } from "react-router-dom";
+import { Outlet, Link, useLocation } from "react-router-dom";
 import './css/Dashboard.css'
 import logo from '../assets/images/logo.png';
 import {
@@ -22,6 +21,12 @@ import {
 export default function Dashboard() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [placement, setPlacement] = React.useState('left')
+  const location = useLocation()
+
+  const isDashboardUrlOnly = () => {
+    return location.pathname == '/Dashboard'
+  }
+
 
   return (
     <>
@@ -32,6 +37,7 @@ export default function Dashboard() {
       <Button color='#ECC94B' colorScheme="white" onClick={onOpen} style={{ width: '100px', height: '50px', boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.5)' }}>
         <img src={logo} alt="Logo" style={{ width: '3rem', height: '3rem' }} />
       </Button>
+      <p className="logo-label" style={{ fontWeight: 'bold', fontSize: '3rem', display: isDashboardUrlOnly() ? 'block' : 'none' }}>Welcome Vilula!</p>
       <div className="logo-container">
         <img src={logo} alt="Logo" style={{ width: '40rem', height: "40rem" }} />
         <span className="logo-label" style={{ fontWeight: 'bold', fontSize: '2.5rem' }}>ThunderBank</span>
