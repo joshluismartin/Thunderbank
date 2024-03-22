@@ -5,7 +5,7 @@ import { Input, Button, useToast, Select } from "@chakra-ui/react";
 
 export default function SendMoney() {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
-  const [stanuSers, setStanusers] = useState(JSON.parse(localStorage.getItem("users") || "[]"))
+  const [bankUsers, setBankusers] = useState(JSON.parse(localStorage.getItem("users") || "[]"))
   const toast = useToast();
   const [senderId, setSenderId] = useState('')
   const [recipientId, setRecipientId] = useState('')
@@ -56,14 +56,14 @@ export default function SendMoney() {
   return (
     <div>
       <label>Send From (User Name): </label>
-      <Select onChange={value => setSenderId(value.target.value)}>
-        {stanuSers.map(user => (
-          <option value={user.userId}>{user.firstName} {user.lastName}</option>))}
+      <Select onChange={(event) => setSenderId(event.target.value)}>
+        {bankUsers.map(user => (
+          <option key={user.userId} value={user.userId}>{user.firstName} {user.lastName}</option>))}
       </Select>
       <label>Send To (User Name): </label>
-      <Select onChange={value => setRecipientId(value.target.value)}>
-        {stanuSers.map(user => (
-          <option value={user.userId}>{user.firstName} {user.lastName}</option>))}
+      <Select onChange={(event) => setRecipientId(event.target.value)}>
+        {bankUsers.map(user => (
+          <option key={user.userId} value={user.userId}>{user.firstName} {user.lastName}</option>))}
       </Select>
 
       <form onSubmit={handleSubmit(onSubmit)}>
