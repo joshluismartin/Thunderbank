@@ -24,15 +24,14 @@ export default function Transactions() {
   
   return (
     <>
-      <TableContainer>
+      <TableContainer style={{width: "100%"}}>
         <Table size='sm' variant='striped' colorScheme='orange'>
           <Thead>
             <Tr>
               <Th>Account Name</Th>
               <Th>User ID</Th>
               <Th isNumeric>Current Balance</Th>
-              <Th>Transaction History</Th>
-              <Th></Th>
+              <Th style={{textAlign: "center"}}>Transaction History</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -40,8 +39,8 @@ export default function Transactions() {
               <Tr key={index}>
                 <Td>{user['firstName']} {user['lastName']}</Td>
                 <Td>{user['userId']}</Td>
-                <Td isNumeric>{user['balance']}</Td>
-                <Td><Deposit user={user} resetUsers={resetUsers} /></Td>
+                <Td isNumeric>{new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(user['balance'])}</Td>
+                <Td style={{textAlign: "center"}}><Deposit user={user} resetUsers={resetUsers} /></Td>
               </Tr>
             ))}
           </Tbody>

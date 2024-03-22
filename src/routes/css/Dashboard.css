@@ -27,7 +27,7 @@
 
 .sidebar {
   position: fixed;
-  width: 300px;
+  /* width: 400px; */
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -38,11 +38,27 @@
 }
 
 .main {
-  padding: 0 0 0 400px;
+  margin: auto;
+  width: 800px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+
 }
 
-.main-components {
-  padding: 20px;
+
+.logo-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.1;
+  z-index: -1;
+  position: absolute;
 }
 
 /*/

@@ -54,10 +54,16 @@ export default function Dashboard() {
         <Stack direction='row' mb='4'>
         </Stack>
       </RadioGroup>
-      <Button color='#ECC94B' colorScheme="red" onClick={onOpen}>
-        Thunder
+      <Button color='#ECC94B' colorScheme="white" onClick={onOpen} style={{ width: '100px', height: '50px', boxShadow: '2px 2px 5px rgba(0, 0, 0, 0.5)' }}>
+        <img src={logo} alt="Logo" style={{ width: '3rem', height: '3rem' }} />
       </Button>
-      <Drawer placement={placement} onClose={onClose} isOpen={isOpen} size='xs' colorScheme="red">
+      <div className="logo-container">
+        <img src={logo} alt="Logo" style={{ width: '40rem', height: "40rem" }} />
+        <span className="logo-label" style={{ fontWeight: 'bold', fontSize: '2.5rem' }}>ThunderBank</span>
+      </div>
+      
+      
+      <Drawer placement={placement} onClose={onClose} isOpen={isOpen} size='sm' colorScheme="red">
         <DrawerContent>
           <DrawerBody>
             <div className="dashboard-container">
@@ -78,9 +84,7 @@ export default function Dashboard() {
       </Drawer>
 
       <main className="main">
-        <div className="main-components">
-          <Outlet />
-        </div>
+        <Outlet />
       </main>
     </>
   )

@@ -9,14 +9,9 @@ export default function Deposit({ user, resetUsers }) {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [error, setError] = useState('')
   const [notice, setNotice] = useState('')
-  const [transactions, setTransactions] = useState([
-    {
-      amount: user['balance'],
-      status: 'Deposit',
-      balance: user['balance'],
-      timedate: new Date().toLocaleString('en-US'),
-    }
-  ])
+  const [transactions, setTransactions] = useState(
+    JSON.parse(localStorage.getItem('transactions'))?.filter((x) => x.userId == user.userId)
+    )
 
   const deposit = () => {
     setError('')
@@ -28,8 +23,9 @@ export default function Deposit({ user, resetUsers }) {
       const newTransaction = {
         accountName: `${user['firstName']} ${user['lastName']}`,
         amount: amount,
-        status: 'deposit',
+        status: 'Deposit',
         balance: newBalance,
+        userId: user.userId,
         timedate: new Date().toLocaleString('en-US'),
       }
       setTransactions([...transactions, newTransaction])
@@ -53,9 +49,11 @@ export default function Deposit({ user, resetUsers }) {
         amount: amount,
         status: 'Withdraw',
         balance: newBalance,
+        userId: user.userId,
         timedate: new Date().toLocaleString('en-US')
       }
       setTransactions([...transactions, newTransaction])
+      setStorageTransactions([...transactions, newTransaction])
       setStorageBalance(newBalance)
     } else {
       setError('Invalid withdrawal amount')
@@ -64,16 +62,18 @@ export default function Deposit({ user, resetUsers }) {
   }
 
   const setStorageBalance = (newBalance) => {
-    const otherUsers = usersStorage().filter(x => {
-      return x['userId'] !== user['userId'];
-    })
-    console.log('otherusers', otherUsers)
-    const newUser = { ...user, 'balance': newBalance }
-    const newUsers = [...otherUsers, newUser]
-    localStorage.setItem('users', JSON.stringify(newUsers))
+    const users = usersStorage()
+    const index = users.findIndex(obj => obj.userId === user.userId);
+    const newUser = { ...user, balance: newBalance }
+    users[index] = newUser
+    localStorage.setItem('users', JSON.stringify(users))
     resetUsers()
   }
 
+  const setStorageTransactions = (array) => {
+    localStorage.setItem('transactions', JSON.stringify(array))
+  }
+  
   const usersStorage = () => {
     return JSON.parse(localStorage.getItem('users'))
   }
@@ -128,7 +128,7 @@ export default function Deposit({ user, resetUsers }) {
               <button onClick={withdraw} className="transaction-button">Withdraw</button>
             </div>
             <TableContainer>
-              <Table size='sm' variant='striped' colorScheme='teal'>
+              <Table size='sm' variant='striped' colorScheme='orange'>
                 <Thead>
                   <Tr>
                     <Th>Date & Time</Th>
@@ -138,7 +138,7 @@ export default function Deposit({ user, resetUsers }) {
                   </Tr>
                 </Thead>
                 <Tbody>
-                  {transactions.map((transaction, index) => (
+                  {transactions?.map((transaction, index) => (
                     <Tr key={index}>
                       <Td>{transaction.timedate}</Td>
                       <Td>{transaction.status}</Td>
