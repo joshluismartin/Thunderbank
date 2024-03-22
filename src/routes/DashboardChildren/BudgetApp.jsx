@@ -1,20 +1,19 @@
 
 import React, { useState, useEffect } from "react";
-import { Input, Button, VStack, HStack, Text, useToast } from "@chakra-ui/react";
+import { Input, Button, VStack, HStack, Text, useToast, Select } from "@chakra-ui/react";
 
 const BudgetApp = () => {
   const [expenses, setExpenses] = useState([]);
   const [balance, setBalance] = useState(0);
   const [expenseName, setExpenseName] = useState("");
   const [expenseCost, setExpenseCost] = useState("");
-  const userId = "someUserId"; // Replace with actual user ID logic
+  const [users, setUsers] = useState(JSON.parse(localStorage.getItem("users") || "[]"));
+  const [userId, setUserId] = useState(users[0]?.userId || ""); // Initialize with the first user's ID if available
   const toast = useToast();
-  const [stanuSers, setStanusers] = useState(JSON.parse(localStorage.getItem("users") || "[]"))
-  const [userId, setuserId] = useState('')
 
   useEffect(() => {
-    // Load user and transactions data from local storage
-    const userData = JSON.parse(localStorage.getItem("users"))?.find(user => user.userId === userId);
+    // Reload user and transactions data from local storage when userId changes
+    const userData = users.find(user => user.userId === userId);
     const transactions = JSON.parse(localStorage.getItem("transactions")) || [];
     const userTransactions = transactions.filter(transaction => transaction.userId === userId);
 
@@ -22,7 +21,7 @@ const BudgetApp = () => {
       setBalance(userData.balance);
       setExpenses(userTransactions);
     }
-  }, [userId]);
+  }, [userId, users]); // Add users to the dependency array
 
   const handleAddExpense = () => {
     const newExpense = {
@@ -33,12 +32,14 @@ const BudgetApp = () => {
       userId: userId,
       timedate: new Date().toLocaleString('en-US'),
     };
-    const updatedExpenses = [...expenses, newExpense];
-    setExpenses(updatedExpenses);
 
     // Update transactions in local storage
-    localStorage.setItem('transactions', JSON.stringify(updatedExpenses));
+    const updatedTransactions = [...expenses, newExpense];
+    localStorage.setItem('transactions', JSON.stringify(updatedTransactions));
+    setExpenses(updatedTransactions);
+
     setBalance(prevBalance => prevBalance - expenseCost);
+
     toast({
       title: "Expense Added",
       description: "Your expense has been successfully recorded",
@@ -50,15 +51,21 @@ const BudgetApp = () => {
 
   return (
     <VStack spacing={4}>
-      <Text>Current Balance: {balance}</Text>
+      <label>Send From (User Name): </label>
+      <Select value={userId} onChange={e => setUserId(e.target.value)}>
+        {users.map(user => (
+          <option key={user.userId} value={user.userId}>{user.firstName} {user.lastName}</option>
+        ))}
+      </Select>
+
+      <Text>Current Balance: Php {balance}</Text>
       <Input placeholder="Expense Name" value={expenseName} onChange={(e) => setExpenseName(e.target.value)} />
       <Input placeholder="Expense Cost" type="number" value={expenseCost} onChange={(e) => setExpenseCost(e.target.value)} />
       <Button onClick={handleAddExpense}>Add Expense</Button>
       <VStack>
         {expenses.map((expense, index) => (
           <HStack key={index}>
-            <Text>{expense.expenseName}: ${expense.amount}</Text>
-            {/* Add any additional management functionality here */}
+            <Text>{expense.expenseName}: Php {expense.amount}</Text>
           </HStack>
         ))}
       </VStack>
