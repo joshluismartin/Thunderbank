@@ -1,21 +1,23 @@
-import React from "react";
+
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Input, Button, useToast } from "@chakra-ui/react";
+import { Input, Button, useToast, Select } from "@chakra-ui/react";
 
 export default function SendMoney() {
   const { register, handleSubmit, formState: { errors }, reset } = useForm();
+  const [stanuSers, setStanusers] = useState(JSON.parse(localStorage.getItem("users") || "[]"))
   const toast = useToast();
-
+  const [senderId, setSenderId] = useState('')
 
   const onSubmit = (data) => {
     let users = JSON.parse(localStorage.getItem("users")) || [];
 
     let sender = users.find(user =>
-      user.firstName === data.sendFromFirstName && user.lastName === data.sendFromLastName
-    );
+      user.userId === senderId);
+    console.log(sender)
     let recipient = users.find(user =>
-      user.firstName === data.sendToFirstName && user.lastName === data.sendToLastName
-    );
+      user.userId === data.sendTo);
+
 
     // Convert amount to a number using parseFloat
     let amountToSend = parseFloat(data.amount);
@@ -47,20 +49,14 @@ export default function SendMoney() {
     }
   };
 
+
   return (
     <div>
+      <Select onChange={value => setSenderId(value.target.value)}>
+        {stanuSers.map(user => (
+          <option value={user.userId}>{user.firstName} {user.lastName}</option>))}
+      </Select>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label>Send From (First Name): </label>
-        <Input
-          {...register("sendFromFirstName", { required: true })}
-          placeholder="Sender's First Name"
-        />
-
-        <label>Send From (Last Name): </label>
-        <Input
-          {...register("sendFromLastName", { required: true })}
-          placeholder="Sender's Last Name"
-        />
 
         <label>Send To (First Name): </label>
         <Input
