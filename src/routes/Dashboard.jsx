@@ -52,6 +52,7 @@ export default function Dashboard() {
                 <Link to='CreateUser'> Create User </Link>
                 <Link to='Transactions'> Transactions </Link>
                 <Link to='SendMoney'> Send Money </Link>
+                <Link to='BudgetApp'> Budget App </Link>
               </div>
             </div>
 
