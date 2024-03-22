@@ -1,18 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
-import { Input, Heading, } from '@chakra-ui/react'
-import { Button } from '@chakra-ui/react'
-import {
-  Alert,
-  AlertIcon,
-  AlertTitle,
-  AlertDescription,
-} from '@chakra-ui/react'
-
-import './css/Login.css'
-
-
-
+import { Input, Heading, Button, Alert, AlertIcon, AlertTitle, AlertDescription, } from '@chakra-ui/react'
+import './css/Login.css';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -32,9 +21,15 @@ const Login = () => {
           <AlertIcon />
           <AlertTitle>Invalid Credentials!</AlertTitle>
           <AlertDescription>Please Check Your Username or Password</AlertDescription>
-        </Alert>);
-
+        </Alert>
+      );
     };
+  }
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleLogin();
+    }
   }
 
   return (
@@ -48,12 +43,14 @@ const Login = () => {
             placeholder="Username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
           <Input
             type="password"
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={handleKeyDown} // Added onKeyDown event listener
           />
           <Button colorScheme='teal' variant='ghost' onClick={handleLogin}>
             Login

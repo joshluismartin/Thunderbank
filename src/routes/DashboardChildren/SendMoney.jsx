@@ -8,6 +8,9 @@ export default function SendMoney() {
   const [stanuSers, setStanusers] = useState(JSON.parse(localStorage.getItem("users") || "[]"))
   const toast = useToast();
   const [senderId, setSenderId] = useState('')
+  const [recipientId, setRecipientId] = useState('')
+
+
 
   const onSubmit = (data) => {
     let users = JSON.parse(localStorage.getItem("users")) || [];
@@ -16,7 +19,7 @@ export default function SendMoney() {
       user.userId === senderId);
     console.log(sender)
     let recipient = users.find(user =>
-      user.userId === data.sendTo);
+      user.userId === recipientId);
 
 
     // Convert amount to a number using parseFloat
@@ -52,23 +55,19 @@ export default function SendMoney() {
 
   return (
     <div>
+      <label>Send From (User Name): </label>
       <Select onChange={value => setSenderId(value.target.value)}>
         {stanuSers.map(user => (
           <option value={user.userId}>{user.firstName} {user.lastName}</option>))}
       </Select>
+      <label>Send To (User Name): </label>
+      <Select onChange={value => setRecipientId(value.target.value)}>
+        {stanuSers.map(user => (
+          <option value={user.userId}>{user.firstName} {user.lastName}</option>))}
+      </Select>
+
       <form onSubmit={handleSubmit(onSubmit)}>
 
-        <label>Send To (First Name): </label>
-        <Input
-          {...register("sendToFirstName", { required: true })}
-          placeholder="Recipient's First Name"
-        />
-
-        <label>Send To (Last Name): </label>
-        <Input
-          {...register("sendToLastName", { required: true })}
-          placeholder="Recipient's Last Name"
-        />
         <label>Amount: </label>
         <Input
           type="number"
