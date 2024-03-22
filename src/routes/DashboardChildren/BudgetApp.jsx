@@ -26,9 +26,9 @@ const BudgetApp = () => {
   const handleAddExpense = () => {
     const newExpense = {
       expenseName,
-      amount: -Math.abs(expenseCost),
+      amount: -Math.abs(Number(expenseCost)),
       status: 'Expense',
-      balance: balance - expenseCost,
+      balance: balance - Number(expenseCost),
       userId: userId,
       timedate: new Date().toLocaleString('en-US'),
     };
@@ -38,7 +38,20 @@ const BudgetApp = () => {
     localStorage.setItem('transactions', JSON.stringify(updatedTransactions));
     setExpenses(updatedTransactions);
 
-    setBalance(prevBalance => prevBalance - expenseCost);
+    // Update balance in local state and local storage
+    const newBalance = balance - Number(expenseCost);
+    setBalance(newBalance);
+
+    // Update the user's balance in the users array and then update local storage
+    const updatedUsers = users.map(user => {
+      if (user.userId === userId) {
+        return { ...user, balance: newBalance };
+      }
+      return user;
+    });
+
+    setUsers(updatedUsers);
+    localStorage.setItem('users', JSON.stringify(updatedUsers));
 
     toast({
       title: "Expense Added",
