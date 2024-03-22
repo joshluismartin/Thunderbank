@@ -21,17 +21,17 @@ export default function Transactions() {
   const resetUsers = () => {
     setUsers(JSON.parse(localStorage.getItem('users')))
   }
-  
+
   return (
     <>
-      <TableContainer style={{width: "100%"}}>
+      <TableContainer style={{ width: "100%" }}>
         <Table size='sm' variant='striped' colorScheme='orange'>
           <Thead>
             <Tr>
               <Th>Account Name</Th>
               <Th>User ID</Th>
               <Th isNumeric>Current Balance</Th>
-              <Th style={{textAlign: "center"}}>Transaction History</Th>
+              <Th style={{ textAlign: "center" }}>Transaction History</Th>
             </Tr>
           </Thead>
           <Tbody>
@@ -40,7 +40,7 @@ export default function Transactions() {
                 <Td>{user['firstName']} {user['lastName']}</Td>
                 <Td>{user['userId']}</Td>
                 <Td isNumeric>{new Intl.NumberFormat('en-PH', { style: 'currency', currency: 'PHP' }).format(user['balance'])}</Td>
-                <Td style={{textAlign: "center"}}><Deposit user={user} resetUsers={resetUsers} /></Td>
+                <Td style={{ textAlign: "center" }}><Deposit user={user} resetUsers={resetUsers} /></Td>
               </Tr>
             ))}
           </Tbody>

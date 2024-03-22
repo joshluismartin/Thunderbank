@@ -11,6 +11,7 @@ import CreateUser from "./routes/DashboardChildren/CreateUser.jsx"
 import Transactions from "./routes/DashboardChildren/Transactions.jsx"
 import SendMoney from "./routes/DashboardChildren/SendMoney.jsx"
 import Deposit from "./routes/DashboardChildren/Deposit.jsx"
+import BudgetApp from "./routes/DashboardChildren/BudgetApp.jsx"
 import { ProtectedRoute } from "./components/ProtectedRoute.jsx"
 
 
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
       {
         path: "Deposit",
         element: <Deposit />,
+      },
+      {
+        path: "BudgetApp",
+        element: <BudgetApp />
       },
     ]
   },
