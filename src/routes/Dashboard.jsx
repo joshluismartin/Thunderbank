@@ -19,31 +19,6 @@ import {
 
 } from '@chakra-ui/react'
 
-/*/export default function Dashboard() {
-  return (
-
-    <div className="dashboard-container">
-      <div className="sidebar">
-        <div className="logo">
-          <img src={logo} alt="Logo" style={{ width: '5rem', height: "5rem" }} />
-          <span className="logo-label" style={{ fontWeight: 'bold', fontSize: '2.5rem' }}>ThunderBank</span>
-        </div>
-        <Link to='Accounts'> Accounts  </Link>
-        <Link to='CreateUser'> Create User </Link>
-        <Link to='Transactions'> Transactions </Link>
-        <Link to='SendMoney'> Send Money </Link>
-      </div>
-      <main className="main">
-        <div className="main-components">
-          <Outlet />
-        </div>
-      </main>
-    </div>
-  )
-
-
-}
-/*/
 export default function Dashboard() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [placement, setPlacement] = React.useState('left')
@@ -61,9 +36,10 @@ export default function Dashboard() {
         <img src={logo} alt="Logo" style={{ width: '40rem', height: "40rem" }} />
         <span className="logo-label" style={{ fontWeight: 'bold', fontSize: '2.5rem' }}>ThunderBank</span>
       </div>
-      
-      
+
+
       <Drawer placement={placement} onClose={onClose} isOpen={isOpen} size='sm' colorScheme="red">
+        <DrawerOverlay />
         <DrawerContent>
           <DrawerBody>
             <div className="dashboard-container">

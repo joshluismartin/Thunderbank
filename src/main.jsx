@@ -47,6 +47,10 @@ const router = createBrowserRouter([
         path: "Deposit",
         element: <Deposit />,
       },
+      /* {
+         path: "BudgetApp",
+         element: <BudgetApp />
+       },*/
     ]
   },
 ]);
