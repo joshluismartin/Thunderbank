@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ChakraProvider,
   Box,
@@ -6,7 +6,7 @@ import {
   VStack,
   Input,
   Button,
-  extendTheme,
+  Select,
 } from '@chakra-ui/react';
 import { User } from './User.js'; // Assume User class is exported from User.js
 
@@ -22,25 +22,43 @@ const theme = extendTheme({
 });
 
 function BudgetApp() {
-  const [user, setUser] = useState(new User('user@example.com', 'password123', 'Jane Doe', 1000));
+  const [users, setUsers] = useState(JSON.parse(localStorage.getItem("users") || "[]"));
+  const [selectedUserId, setSelectedUserId] = useState('');
+  const [selectedUser, setSelectedUser] = useState(null);
   const [name, setName] = useState('');
   const [cost, setCost] = useState('');
 
+  // Effect to update the selected user based on selectedUserId
+  useEffect(() => {
+    const user = users.find(u => u.userId === selectedUserId);
+    setSelectedUser(user || null);
+  }, [selectedUserId, users]);
+
   const handleAddExpense = () => {
-    user.addExpenseItem(name, parseInt(cost, 10));
-    setName('');
-    setCost('');
+    if (selectedUser) {
+      selectedUser.addExpenseItem(name, parseInt(cost, 10));
+      // Optionally update the users array and localStorage here if necessary
+      setName('');
+      setCost('');
+      // Trigger a re-render if users are updated outside of React state
+    }
   };
 
   return (
     <ChakraProvider theme={theme}>
+      <Select onChange={(e) => setSelectedUserId(e.target.value)}>
+        {users.map(user => (
+          <option key={user.userId} value={user.userId}>{user.firstName} {user.lastName}</option>
+        ))}
+      </Select>
+
       <Box p={5}>
         <VStack spacing={4}>
-          <Text>Current Balance: {user.accountBalance}</Text>
+          <Text>Current Balance: {selectedUser ? selectedUser.accountBalance : 'Select a user'}</Text>
           <Input placeholder="Expense Name" value={name} onChange={(e) => setName(e.target.value)} />
           <Input placeholder="Cost" type="number" value={cost} onChange={(e) => setCost(e.target.value)} />
           <Button onClick={handleAddExpense}>Add Expense</Button>
-          {user.listExpenseItems().map((item) => (
+          {selectedUser && selectedUser.listExpenseItems().map((item) => (
             <Box key={item.id}>
               <Text>{item.name}: Php{item.cost}</Text>
             </Box>
@@ -52,4 +70,3 @@ function BudgetApp() {
 }
 
 export default BudgetApp;
-
