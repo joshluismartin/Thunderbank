@@ -37,7 +37,7 @@ const BudgetApp = () => {
     const updatedTransactions = [...expenses, newExpense];
     localStorage.setItem('transactions', JSON.stringify(updatedTransactions));
     setExpenses(updatedTransactions);
-
+    console.log(expenses)
     // Update balance in local state and local storage
     const newBalance = balance - Number(expenseCost);
     setBalance(newBalance);
