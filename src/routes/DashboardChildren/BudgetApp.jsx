@@ -7,7 +7,7 @@ const BudgetApp = () => {
   const [expenseName, setExpenseName] = useState("");
   const [expenseCost, setExpenseCost] = useState("");
   const [users, setUsers] = useState(JSON.parse(localStorage.getItem("users") || "[]"));
-  const [userId, setUserId] = useState(users[0]?.userId || ""); // Initialize with the first user's ID if available
+  const [userId, setUserId] = useState(users[0]?.userId || "");
   const toast = useToast();
 
   useEffect(() => {

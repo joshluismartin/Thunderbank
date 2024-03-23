@@ -11,7 +11,7 @@ export default function Deposit({ user, resetUsers }) {
   const [notice, setNotice] = useState('')
   const [transactions, setTransactions] = useState(
     JSON.parse(localStorage.getItem('transactions'))?.filter((x) => x.userId == user.userId)
-    )
+  )
 
   const deposit = () => {
     setError('')
@@ -29,6 +29,7 @@ export default function Deposit({ user, resetUsers }) {
         timedate: new Date().toLocaleString('en-US'),
       }
       setTransactions([...transactions, newTransaction])
+      setStorageTransactions([...transactions, newTransaction])
       setStorageBalance(newBalance)
     } else {
       setError('Invalid deposit amount')
@@ -73,7 +74,7 @@ export default function Deposit({ user, resetUsers }) {
   const setStorageTransactions = (array) => {
     localStorage.setItem('transactions', JSON.stringify(array))
   }
-  
+
   const usersStorage = () => {
     return JSON.parse(localStorage.getItem('users'))
   }
