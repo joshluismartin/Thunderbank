@@ -55,18 +55,19 @@ export default function SendMoney() {
 
   return (
     <div>
-      <label>Send From (User Name): </label>
-      <Select onChange={(event) => setSenderId(event.target.value)}>
-        {bankUsers.map(user => (
-          <option key={user.userId} value={user.userId}>{user.firstName} {user.lastName}</option>))}
-      </Select>
-      <label>Send To (User Name): </label>
-      <Select onChange={(event) => setRecipientId(event.target.value)}>
-        {bankUsers.map(user => (
-          <option key={user.userId} value={user.userId}>{user.firstName} {user.lastName}</option>))}
-      </Select>
 
       <form onSubmit={handleSubmit(onSubmit)}>
+        <label>Send From (User Name): </label>
+        <Select onChange={(event) => setSenderId(event.target.value)}>
+          {bankUsers.map(user => (
+            <option key={user.userId} value={user.userId}>{user.firstName} {user.lastName}</option>))}
+        </Select>
+        <label>Send To (User Name): </label>
+        <Select onChange={(event) => setRecipientId(event.target.value)}>
+          {bankUsers.map(user => (
+            <option key={user.userId} value={user.userId}>{user.firstName} {user.lastName}</option>))}
+        </Select>
+
 
         <label>Amount: </label>
         <Input
